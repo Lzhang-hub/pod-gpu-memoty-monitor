@@ -1,6 +1,6 @@
 # gpu-memory-monitor
 
-本项目用于监控k8s集群上pod中进程使用的GPU显存大小，主要是针对共享GPU的情况。
+本项目用于监控k8s集群上pod中进程使用的GPU显存大小，主要是针对共享GPU的情况。源参考方案：https://github.com/lxyzhangqing/gpu-memory-monitor
 
 如果是单卡的情况可以参看：https://github.com/king-jingxiang/pod-gpushare-metrics-exporter，该方案可以直接监控每张卡上面的pod的资源使用情况。
 

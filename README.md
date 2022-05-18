@@ -1,8 +1,14 @@
 # gpu-memory-monitor
 
-`gpu-memory-monitor` is a metrics server for collecting GPU memory usage of kubernetes pods.
-If you have a GPU machine, and some pods are using the GPU device, you can run the container by docker or kubernetes when your GPU device belongs to nvidia.
-The `gpu-memory-monitor` will collect the GPU memory usage of pods, you can get those metrics by API of `gpu-memory-monitor`.
+本项目用于监控k8s集群上pod中进程使用的GPU显存大小，主要是针对共享GPU的情况。
+
+如果是单卡的情况可以参看：https://github.com/king-jingxiang/pod-gpushare-metrics-exporter，该方案可以直接监控每张卡上面的pod的资源使用情况。
+
+主要原理：
+
+- 调用nvml库获取每张卡上面占用GPU的进程信息，该信息包含了进程的显存占用；
+- 调用docker.sock获取当前机器上面所有docker容器信息，主要包含容器的PID、容器对应的pod信息；
+- 将卡上的进程信息和docker中的进程信息匹配，如果存在，则返回该容器对应的pod信息，（注意：GPU卡上的进程可能是容器进程的子进程，所以需要判断GPU卡上进程的父进程在容器列表中是否存在）
 
 ### Prerequisites
 - golang 1.15+
